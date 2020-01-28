@@ -545,7 +545,7 @@ case $OPTION in
 		echo "Compiling NGINX"
 		sleep 3
 
-		./configure $NGINX_OPTIONS --with-cc-opt='-g -O2 -fPIC -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2' --with-ld-opt='-Wl,-Bsymbolic-functions -fPIC -pie -Wl,-z,relro -Wl,-z,now' --with-pcre-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' --with-zlib-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' $NGINX_MODULES
+		./configure $NGINX_OPTIONS --with-cc-opt='-g -O2 -fPIC -fstack-protector-strong -Wformat -Wno-error -Wdate-time -D_FORTIFY_SOURCE=2' --with-ld-opt='-Wl,-Bsymbolic-functions -fPIC -pie -Wl,-z,relro -Wl,-z,now' --with-pcre-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' --with-zlib-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' $NGINX_MODULES
 		make -j "$(nproc)"
 		make install
 
@@ -611,7 +611,7 @@ case $OPTION in
 		echo "NGINX Installed Successfully"
 		tend=$(date +%s)
 		totalruntime=$((tend-tstart))
-		echo "Total To Compile and Install Nginx: $totalruntime seconds!"
+		echo "Total Time To Compile and Install Nginx: $totalruntime seconds!"
 	exit
 	;;
 	2) # Uninstall Nginx
@@ -665,7 +665,7 @@ case $OPTION in
 
 		tend=$(date +%s)
 		totalruntime=$((tend-tstart))
-		echo "Total To Uninstall Nginx: $totalruntime seconds!"
+		echo "Total Time To Uninstall Nginx: $totalruntime seconds!"
 		exit
 	;;
 	3) # # Update the script
@@ -684,7 +684,7 @@ case $OPTION in
 		echo "Update complete"
 				tend=$(date +%s)
 		totalruntime=$((tend-tstart))
-		echo "Total To Update The OptimNGINX(SCRIPT): $totalruntime seconds!"
+		echo "Total Time To Update The OptimStack(SCRIPT): $totalruntime seconds!"
 		exit
 	;;
 	*) # Exit
