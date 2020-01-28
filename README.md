@@ -19,7 +19,7 @@
 Just run this command in your shell to download and run the script, and then just follow the instruction on your screen:
 
 ```
-cd /tmp; rm -rf OptimStack.sh; wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/OptimStack.sh; chmod +x OptimStack.sh; bash OptimStack.sh
+cd /tmp; rm -rf OptimStack.sh; wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/OptimStack.sh --no-dns-cache; chmod +x OptimStack.sh; bash OptimStack.sh
 ```
 
 # Installing WordPress (Optional)
