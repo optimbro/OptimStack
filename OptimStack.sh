@@ -52,7 +52,7 @@ echo '
         '
         echo ""
 	echo ""
-	echo "OptimNGINX v-${OPTIM_NGINX_VER}"
+	echo "OptimStack v-${OPTIM_NGINX_VER}"
 	echo "It is the most complete nginx installation script which supports most widely used nginx modules."
 	echo "Choose your desired option from the menu"
 	echo "Credits: Forked from https://github.com/angristan/nginx-autoinstall, thanks to the developer."
