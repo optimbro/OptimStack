@@ -26,7 +26,7 @@ cd /tmp; rm -rf OptimStack.sh; wget https://raw.githubusercontent.com/OptimBro/O
 
 You need to setup WP CLI first
 ```
-cd /web; rm wp.sh; wget https://raw.githubusercontent.com/OptimBro/OptimNGINX/master/wp.sh; chmod +x wp.sh; bash wp.sh
+cd /web; rm wp.sh; wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/wp.sh; chmod +x wp.sh; bash wp.sh
 ```
 
 Credits: Inspired from https://github.com/angristan/nginx-autoinstall (Thanks for the script)
