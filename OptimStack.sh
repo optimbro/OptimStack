@@ -673,6 +673,7 @@ case $OPTION in
 		echo "Purging DNS Cache"
 		sudo /etc/init.d/networking restart
 		sleep 1
+		rm -rf OptimStack.sh
 		echo "Starting update..."
 		sleep 1
 		wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/OptimStack.sh -O OptimStack.sh
