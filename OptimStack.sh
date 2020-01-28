@@ -430,7 +430,6 @@ case $OPTION in
 		--with-http_stub_status_module \
 		--with-http_realip_module \
 		--with-pcre-jit \
-		--with-debug \
 		--with-http_degradation_module \
 		--with-http_addition_module \
 		--with-http_dav_module \
