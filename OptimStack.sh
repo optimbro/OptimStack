@@ -675,12 +675,12 @@ case $OPTION in
 		sleep 1
 		echo "Starting update..."
 		sleep 1
-		wget https://raw.githubusercontent.com/OptimBro/Advanced-Nginx-Install-Script/master/ngx.sh -O ngx.sh
-		chmod +x ngx.sh
+		wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/OptimStack.sh -O OptimStack.sh
+		chmod +x OptimStack.sh
 		echo ""
 		echo "Updating script..."
 		sleep 3
-		./ngx.sh
+		./OptimStack.sh
 		echo "Update complete"
 				tend=$(date +%s)
 		totalruntime=$((tend-tstart))
