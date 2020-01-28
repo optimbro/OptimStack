@@ -676,7 +676,7 @@ case $OPTION in
 		rm -rf OptimStack.sh
 		echo "Starting update..."
 		sleep 1
-		wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/OptimStack.sh -O OptimStack.sh
+		wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/OptimStack.sh --no-dns-cache -O OptimStack.sh
 		chmod +x OptimStack.sh
 		echo ""
 		echo "Updating script..."
