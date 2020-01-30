@@ -204,7 +204,7 @@ case $OPTION in
 		echo "System updated"
 		sleep 1
 		echo "Installing Dependencies..."
-		apt-get -o Acquire::ForceIPv4=true install -y build-essential ca-certificates wget curl libpcre3 libpcre3-dev autoconf unzip automake libtool tar git libssl-dev zlib1g-dev uuid-dev lsb-release libxml2-dev libxslt1-dev
+		apt-get -o Acquire::ForceIPv4=true install -y build-essential cmake ca-certificates wget curl libpcre3 libpcre3-dev autoconf unzip automake libtool tar git libssl-dev zlib1g-dev uuid-dev lsb-release libxml2-dev libxslt1-dev
         	apt-get -o Acquire::ForceIPv4=true install -y apt-utils autoconf automake build-essential git libcurl4-openssl-dev libgeoip-dev liblmdb-dev libpcre++-dev libtool libxml2-dev libyajl-dev pkgconf wget zlib1g-dev git
 		apt-get -o Acquire::ForceIPv4=true install -y libtool autoconf build-essential libpcre3-dev zlib1g-dev libssl-dev libxml2-dev libgeoip-dev liblmdb-dev libyajl-dev libcurl4-openssl-dev libpcre++-dev pkgconf libxslt1-dev libgd-dev
 		echo "Dependencies Installed"
