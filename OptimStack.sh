@@ -6,7 +6,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Define versions
-OPTIM_NGINX_VER=20.3
+OPTIM_NGINX_VER=20.2
 NGINX_MAINLINE_VER=1.17.8
 NGINX_STABLE_VER=1.16.1
 LIBRESSL_VER=3.0.2
@@ -153,6 +153,9 @@ case $OPTION in
 			done
 			while [[ $ZLIB_NGINX != "y" && $ZLIB_NGINX != "n" ]]; do
 				read -p "       nginx zlib [y/n]: " -e ZLIB_NGINX
+			done
+			while [[ $CT_NGINX != "y" && $CT_NGINX != "n" ]]; do
+				read -p "       nginx Certificate Transparency (CT) [y/n]: " -e CT_NGINX
 			done
 			while [[ $HTTP3 != "y" && $HTTP3 != "n" ]]; do
 				read -p "       HTTP/3 (by Cloudflare, WILL INSTALL BoringSSL, Quiche, Rust and Go) [y/n]: " -e HTTP3
@@ -382,9 +385,16 @@ case $OPTION in
 		echo "Configuring ZLIB_NGINX Module"
 		sleep 3
 			cd /usr/local/src/nginx/modules || exit 1
-			wget http://zlib.net/zlib-${ZLIB_NGINX_VER}.tar.gz
-			tar xaf zlib-${ZLIB_NGINX_VER}.tar.gz
-			cd zlib-${ZLIB_NGINX_VER}
+			git clone https://github.com/cloudflare/zlib.git zlib-cf
+			cd zlib-cf
+			make -f Makefile.in distclean
+		fi
+		
+		if [[ "$CT_NGINX" = 'y' ]]; then
+		echo "Configuring CT_NGINX Module"
+		sleep 3
+			cd /usr/local/src/nginx/modules || exit 1
+			git clone https://github.com/grahamedgecombe/nginx-ct.git
 		fi
 
 		# Download and extract of Nginx source code
@@ -442,6 +452,7 @@ case $OPTION in
 		--with-stream_ssl_module \
 		--with-stream_ssl_preread_module \
 		--with-select_module \
+		--with-http_v2_hpack_enc \
 		--with-poll_module"
 
 		# Optional modules
@@ -521,7 +532,11 @@ case $OPTION in
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--with-pcre=/usr/local/src/nginx/modules/pcre-${PCRE_NGINX_VER}")
 		fi
 		if [[ "$ZLIB_NGINX" = 'y' ]]; then
-			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--with-zlib=/usr/local/src/nginx/modules/zlib-${ZLIB_NGINX_VER}")
+			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--with-zlib=/usr/local/src/nginx/modules/zlib-cf")
+		fi
+		
+		if [[ "$CT_NGINX" = 'y' ]]; then
+			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--with-zlib=/usr/local/src/nginx/modules/nginx-ct")
 		fi
 
 		# HTTP3
@@ -536,10 +551,8 @@ case $OPTION in
 
 			cd /usr/local/src/nginx/nginx-${NGINX_VER} || exit 1
 			# Apply actual patch
-			wget -c https://raw.githubusercontent.com/kn007/patch/master/nginx_with_spdy_quic.patch
-			wget -c https://raw.githubusercontent.com/cloudflare/quiche/master/extras/nginx/nginx-1.16.patch
-			patch -p1 < nginx_with_spdy_quic.patch
-			patch -p1 < nginx-1.16.patch
+			wget -c https://raw.githubusercontent.com/kn007/patch/master/nginx_with_quic.patch
+			patch -p1 < nginx_with_quic.patch
 
 			NGINX_OPTIONS=$(echo "$NGINX_OPTIONS"; echo --with-openssl=/usr/local/src/nginx/modules/quiche/deps/boringssl --with-quiche=/usr/local/src/nginx/modules/quiche)
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo --with-http_v3_module)
