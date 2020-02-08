@@ -536,7 +536,7 @@ case $OPTION in
 		fi
 		
 		if [[ "$CT_NGINX" = 'y' ]]; then
-			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--with-zlib=/usr/local/src/nginx/modules/nginx-ct")
+			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--add-module=/usr/local/src/nginx/modules/nginx-ct")
 		fi
 
 		# HTTP3
