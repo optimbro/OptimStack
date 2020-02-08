@@ -393,10 +393,6 @@ case $OPTION in
 		cd /usr/local/src/nginx/ || exit 1
 		wget -qO- http://nginx.org/download/nginx-${NGINX_VER}.tar.gz | tar zxf -
 		cd nginx-${NGINX_VER}
-		echo "Patching Nginx"
-		sleep 3
-		wget -c https://raw.githubusercontent.com/kn007/patch/master/nginx_with_spdy_quic.patch
-		patch -p1 < nginx_with_spdy_quic.patch
 
 		# As the default nginx.conf does not work, we download a clean and working conf from my GitHub.
 		# We do it only if it does not already exist, so that it is not overriten if Nginx is being updated
@@ -540,7 +536,8 @@ case $OPTION in
 
 			cd /usr/local/src/nginx/nginx-${NGINX_VER} || exit 1
 			# Apply actual patch
-			patch -p01 < /usr/local/src/nginx/modules/quiche/extras/nginx/nginx-1.16.patch
+			wget -c https://raw.githubusercontent.com/kn007/patch/master/nginx_with_spdy_quic.patch
+			patch -p1 < nginx_with_spdy_quic.patch
 
 			NGINX_OPTIONS=$(echo "$NGINX_OPTIONS"; echo --with-openssl=/usr/local/src/nginx/modules/quiche/deps/boringssl --with-quiche=/usr/local/src/nginx/modules/quiche)
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo --with-http_v3_module)
