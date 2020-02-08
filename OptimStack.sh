@@ -6,7 +6,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Define versions
-OPTIM_NGINX_VER=20.0
+OPTIM_NGINX_VER=20.1
 NGINX_MAINLINE_VER=1.17.8
 NGINX_STABLE_VER=1.16.1
 LIBRESSL_VER=3.0.2
@@ -393,6 +393,10 @@ case $OPTION in
 		cd /usr/local/src/nginx/ || exit 1
 		wget -qO- http://nginx.org/download/nginx-${NGINX_VER}.tar.gz | tar zxf -
 		cd nginx-${NGINX_VER}
+		echo "Patching Nginx"
+		sleep 3
+		wget -c https://raw.githubusercontent.com/kn007/patch/master/nginx_with_spdy_quic.patch
+		patch -p1 < nginx_with_spdy_quic.patch
 
 		# As the default nginx.conf does not work, we download a clean and working conf from my GitHub.
 		# We do it only if it does not already exist, so that it is not overriten if Nginx is being updated
