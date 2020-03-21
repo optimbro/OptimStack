@@ -455,7 +455,6 @@ case $OPTION in
 		--with-stream_ssl_module \
 		--with-stream_ssl_preread_module \
 		--with-select_module \
-		--with-http_v2_hpack_enc \
 		--with-poll_module"
 
 		# Optional modules
@@ -558,7 +557,7 @@ case $OPTION in
 			patch -p1 < nginx_with_quic.patch
 
 			NGINX_OPTIONS=$(echo "$NGINX_OPTIONS"; echo --with-openssl=/usr/local/src/nginx/modules/quiche/deps/boringssl --with-quiche=/usr/local/src/nginx/modules/quiche)
-			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo --with-http_v3_module)
+			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo --with-http_v3_module --with-http_v2_hpack_enc)
 		fi
 
 		echo "Compiling NGINX"
