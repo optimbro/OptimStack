@@ -14,12 +14,20 @@
 - ngx_cache_purge (Purge content from FastCGI, proxy, SCGI and uWSGI caches)
 - ngx-fancyindex (Fancy indexes module)
 
-# How to use
+# Installation: No Control Panel / ISPConfig / VirtualMin (not tested)
 
 Just run this command in your shell to download and run the script, and then just follow the instruction on your screen:
 
 ```
 cd /tmp; rm -rf optimstack.sh; wget https://raw.githubusercontent.com/OptimBro/optimstack/master/optimstack.sh --no-dns-cache; chmod +x optimstack.sh; bash optimstack.sh
+```
+
+# Installation: VirtualMin (tested)
+
+Just run this command in your shell to download and run the script, and then just follow the instruction on your screen:
+
+```
+cd /tmp; rm -rf optimstack-virtualmin.sh; wget https://raw.githubusercontent.com/OptimBro/optimstack/master/optimstack-virtualmin.sh --no-dns-cache; chmod +x optimstack-virtualmin.sh; bash optimstack-virtualmin.sh
 ```
 
 # Installing WordPress (Optional)
