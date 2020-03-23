@@ -1,4 +1,4 @@
-# OptimStack
+# optimstack
 
  Optimized NGINX installation script with extra module support and configuration. https://optimengine.com
 
@@ -19,14 +19,14 @@
 Just run this command in your shell to download and run the script, and then just follow the instruction on your screen:
 
 ```
-cd /tmp; rm -rf OptimStack.sh; wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/OptimStack.sh --no-dns-cache; chmod +x OptimStack.sh; bash OptimStack.sh
+cd /tmp; rm -rf optimstack.sh; wget https://raw.githubusercontent.com/OptimBro/optimstack/master/optimstack.sh --no-dns-cache; chmod +x optimstack.sh; bash optimstack.sh
 ```
 
 # Installing WordPress (Optional)
 
 You need to setup WP CLI first
 ```
-cd /web; rm wp.sh; wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/wp.sh; chmod +x wp.sh; bash wp.sh
+cd /web; rm wp.sh; wget https://raw.githubusercontent.com/OptimBro/optimstack/master/wp.sh; chmod +x wp.sh; bash wp.sh
 ```
 
 Credits: Inspired from https://github.com/angristan/nginx-autoinstall (Thanks for the script)
