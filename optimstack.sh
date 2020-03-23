@@ -409,7 +409,7 @@ case $OPTION in
 		if [[ ! -e /etc/nginx/nginx.conf ]]; then
 			mkdir -p /etc/nginx
 			cd /etc/nginx || exit 1
-			wget https://raw.githubusercontent.com/OptimBro/Advanced-Nginx-Install-Script/master/conf/nginx.conf
+			wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/Config/nginx.conf
 		fi
 		echo "Configuring NGINX"
 		sleep 3
