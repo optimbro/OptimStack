@@ -52,7 +52,7 @@ echo '
         '
         echo ""
 	echo ""
-	echo "OptimStack v-${OPTIM_NGINX_VER}"
+	echo "optimstack v-${OPTIM_NGINX_VER}"
 	echo "It is the most complete nginx installation script which supports most widely used nginx modules."
 	echo "Choose your desired option from the menu"
 	echo "Credits: Forked from https://github.com/angristan/nginx-autoinstall, thanks to the developer."
@@ -690,19 +690,19 @@ case $OPTION in
 		echo "Purging DNS Cache"
 		sudo /etc/init.d/networking restart
 		sleep 1
-		rm -rf OptimStack.sh
+		rm -rf optimstack.sh
 		echo "Starting update..."
 		sleep 1
-		wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/OptimStack.sh --no-dns-cache -O OptimStack.sh
-		chmod +x OptimStack.sh
+		wget https://raw.githubusercontent.com/OptimBro/optimstack/master/optimstack.sh --no-dns-cache -O optimstack.sh
+		chmod +x optimstack.sh
 		echo ""
 		echo "Updating script..."
 		sleep 3
-		./OptimStack.sh
+		./optimstack.sh
 		echo "Update complete"
 				tend=$(date +%s)
 		totalruntime=$((tend-tstart))
-		echo "Total Time To Update The OptimStack(SCRIPT): $totalruntime seconds!"
+		echo "Total Time To Update The optimstack(SCRIPT): $totalruntime seconds!"
 		exit
 	;;
 	*) # Exit
