@@ -257,6 +257,7 @@ case $OPTION in
 			cd libmaxminddb-${LIBMAXMINDDB_VER}/
 			./configure
 			make
+			make -j "$(nproc)"
 			make install
 			ldconfig
 
@@ -330,6 +331,7 @@ case $OPTION in
 			./build.sh
 			./configure
 			make
+			make -j "$(nproc)"
 			make install
 			mkdir /etc/nginx/modsec
 			wget -P /etc/nginx/modsec/ https://raw.githubusercontent.com/SpiderLabs/ModSecurity/v3/master/modsecurity.conf-recommended
