@@ -6,7 +6,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Define versions
-OPTIM_NGINX_VER=30.3
+OPTIM_NGINX_VER=30.4
 NGINX_MAINLINE_VER=1.17.9
 NGINX_STABLE_VER=1.16.1
 LIBRESSL_VER=3.0.2
@@ -164,7 +164,7 @@ case $OPTION in
 			if [[ $NGINX_VER == $NGINX_MAINLINE_VER ]]; then
 				# The patch only works on mainline
 				while [[ $TLSDYN !=  "y" && $TLSDYN != "n" ]]; do
-					read -p "       Cloudflare's TLS Dynamic Record Resizing patch [y/n]: " -e TLSDYN
+					read -p "       Patch Nginx? [y/n]: " -e TLSDYN
 				done
 			fi
 
@@ -548,10 +548,15 @@ case $OPTION in
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--add-module=/usr/local/src/nginx/modules/nginx-ct")
 		fi
 		
-		# Cloudflare's TLS Dynamic Record Resizing patch
+		# Nginx Patch
 		if [[ "$TLSDYN" = 'y' ]]; then
-			wget https://raw.githubusercontent.com/nginx-modules/ngx_http_tls_dyn_size/master/nginx__dynamic_tls_records_1.17.7%2B.patch -O tcp-tls.patch
-			patch -p1 < tcp-tls.patch
+			cd /usr/local/src/nginx/nginx-${NGINX_VER} || exit 1
+			# Apply actual patch
+			wget -c https://raw.githubusercontent.com/kn007/patch/master/nginx_with_quic.patch
+			patch -p1 < nginx_with_quic.patch
+			
+			wget -c https://raw.githubusercontent.com/kn007/patch/master/Enable_BoringSSL_OCSP.patch
+			patch -p1 < Enable_BoringSSL_OCSP.patch
 		fi
 
 		# HTTP3
