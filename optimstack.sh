@@ -6,7 +6,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Define versions
-OPTIM_NGINX_VER=30.1
+OPTIM_NGINX_VER=30.2
 NGINX_MAINLINE_VER=1.17.9
 NGINX_STABLE_VER=1.16.1
 LIBRESSL_VER=3.0.2
@@ -160,6 +160,13 @@ case $OPTION in
 			while [[ $HTTP3 != "y" && $HTTP3 != "n" ]]; do
 				read -p "       HTTP/3 (by Cloudflare, WILL INSTALL BoringSSL, Quiche, Rust and Go) [y/n]: " -e HTTP3
 			done
+			
+			if [[ $NGINX_VER == $NGINX_MAINLINE_VER ]]; then
+				# The patch only works on mainline
+				while [[ $TLSDYN !=  "y" && $TLSDYN != "n" ]]; do
+					read -p "       Cloudflare's TLS Dynamic Record Resizing patch [y/n]: " -e TLSDYN
+				done
+			fi
 
 		if [[ "$HTTP3" != 'y' ]]; then
 				echo ""
@@ -388,6 +395,12 @@ case $OPTION in
 			git clone https://github.com/cloudflare/zlib.git zlib-cf
 			cd zlib-cf
 			make -f Makefile.in distclean
+		fi
+		
+		# Cloudflare's TLS Dynamic Record Resizing patch
+		if [[ "$TLSDYN" = 'y' ]]; then
+			wget https://raw.githubusercontent.com/nginx-modules/ngx_http_tls_dyn_size/master/nginx__dynamic_tls_records_1.17.7%2B.patch -O tcp-tls.patch
+			patch -p1 < tcp-tls.patch
 		fi
 		
 		if [[ "$CT_NGINX" = 'y' ]]; then
