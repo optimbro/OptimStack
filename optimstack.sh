@@ -6,7 +6,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Define versions
-OPTIM_NGINX_VER=30.0
+OPTIM_NGINX_VER=31.0
 NGINX_MAINLINE_VER=1.17.9
 NGINX_STABLE_VER=1.16.1
 LIBRESSL_VER=3.0.2
@@ -555,6 +555,9 @@ case $OPTION in
 			# Apply actual patch
 			wget -c https://raw.githubusercontent.com/kn007/patch/master/nginx_with_quic.patch
 			patch -p1 < nginx_with_quic.patch
+			
+			wget -c https://raw.githubusercontent.com/kn007/patch/master/Enable_BoringSSL_OCSP.patch
+			patch -p1 < Enable_BoringSSL_OCSP.patch
 
 			NGINX_OPTIONS=$(echo "$NGINX_OPTIONS"; echo --with-openssl=/usr/local/src/nginx/modules/quiche/deps/boringssl --with-quiche=/usr/local/src/nginx/modules/quiche)
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo --with-http_v3_module --with-http_v2_hpack_enc)
