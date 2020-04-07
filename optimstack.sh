@@ -6,7 +6,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Define versions
-OPTIM_NGINX_VER=30.5
+OPTIM_NGINX_VER=30.0
 NGINX_MAINLINE_VER=1.17.9
 NGINX_STABLE_VER=1.16.1
 LIBRESSL_VER=3.0.2
@@ -160,13 +160,6 @@ case $OPTION in
 			while [[ $HTTP3 != "y" && $HTTP3 != "n" ]]; do
 				read -p "       HTTP/3 (by Cloudflare, WILL INSTALL BoringSSL, Quiche, Rust and Go) [y/n]: " -e HTTP3
 			done
-			
-			if [[ $NGINX_VER == $NGINX_MAINLINE_VER ]]; then
-				# The patch only works on mainline
-				while [[ $TLSDYN !=  "y" && $TLSDYN != "n" ]]; do
-					read -p "       Patch Nginx? [y/n]: " -e TLSDYN
-				done
-			fi
 
 		if [[ "$HTTP3" != 'y' ]]; then
 				echo ""
@@ -547,17 +540,6 @@ case $OPTION in
 		if [[ "$CT_NGINX" = 'y' ]]; then
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--add-module=/usr/local/src/nginx/modules/nginx-ct")
 		fi
-		
-		# Nginx Patch
-		if [[ "$TLSDYN" = 'y' ]]; then
-			cd /usr/local/src/nginx/nginx-${NGINX_VER} || exit 1
-			# Apply actual patch
-			wget -c https://raw.githubusercontent.com/kn007/patch/master/nginx_with_quic.patch
-			patch -p1 < nginx_with_quic.patch
-			
-			wget -c https://raw.githubusercontent.com/kn007/patch/master/Enable_BoringSSL_OCSP.patch
-			patch -p1 < Enable_BoringSSL_OCSP.patch
-		fi
 
 		# HTTP3
 		if [[ "$HTTP3" = 'y' ]]; then
@@ -569,6 +551,11 @@ case $OPTION in
 			curl -sSf https://sh.rustup.rs | sh -s -- -y
 			source $HOME/.cargo/env
 
+			cd /usr/local/src/nginx/nginx-${NGINX_VER} || exit 1
+			# Apply actual patch
+			wget -c https://raw.githubusercontent.com/kn007/patch/master/nginx_with_quic.patch
+			patch -p1 < nginx_with_quic.patch
+
 			NGINX_OPTIONS=$(echo "$NGINX_OPTIONS"; echo --with-openssl=/usr/local/src/nginx/modules/quiche/deps/boringssl --with-quiche=/usr/local/src/nginx/modules/quiche)
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo --with-http_v3_module --with-http_v2_hpack_enc)
 		fi
@@ -576,7 +563,7 @@ case $OPTION in
 		echo "Compiling NGINX"
 		sleep 3
 
-		./configure $NGINX_OPTIONS --with-cc-opt='-g -O2 -fPIC -fstack-protector-strong -Wformat -Wno-error -Wdate-time -D_FORTIFY_SOURCE=2' --with-ld-opt='-Wl,-Bsymbolic-functions -fPIC -pie -Wl,-z,relro -Wl,-z,now' --with-pcre-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' --with-zlib-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' $NGINX_MODULES
+		./configure $NGINX_OPTIONS --with-cc-opt='-g -O2 -fPIC -fstack-protector-strong -Wformat -Wno-error -Wno-deprecated-declarations -Wno-ignored-qualifiers -Wdate-time -D_FORTIFY_SOURCE=2' --with-ld-opt='-Wl,-Bsymbolic-functions -fPIC -pie -Wl,-z,relro -Wl,-z,now' --with-pcre-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' --with-zlib-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' $NGINX_MODULES
 		make -j "$(nproc)"
 		make install
 
