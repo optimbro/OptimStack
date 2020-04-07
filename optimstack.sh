@@ -6,7 +6,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Define versions
-OPTIM_NGINX_VER=30.2
+OPTIM_NGINX_VER=30.3
 NGINX_MAINLINE_VER=1.17.9
 NGINX_STABLE_VER=1.16.1
 LIBRESSL_VER=3.0.2
@@ -397,12 +397,6 @@ case $OPTION in
 			make -f Makefile.in distclean
 		fi
 		
-		# Cloudflare's TLS Dynamic Record Resizing patch
-		if [[ "$TLSDYN" = 'y' ]]; then
-			wget https://raw.githubusercontent.com/nginx-modules/ngx_http_tls_dyn_size/master/nginx__dynamic_tls_records_1.17.7%2B.patch -O tcp-tls.patch
-			patch -p1 < tcp-tls.patch
-		fi
-		
 		if [[ "$CT_NGINX" = 'y' ]]; then
 		echo "Configuring CT_NGINX Module"
 		sleep 3
@@ -552,6 +546,12 @@ case $OPTION in
 		
 		if [[ "$CT_NGINX" = 'y' ]]; then
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--add-module=/usr/local/src/nginx/modules/nginx-ct")
+		fi
+		
+		# Cloudflare's TLS Dynamic Record Resizing patch
+		if [[ "$TLSDYN" = 'y' ]]; then
+			wget https://raw.githubusercontent.com/nginx-modules/ngx_http_tls_dyn_size/master/nginx__dynamic_tls_records_1.17.7%2B.patch -O tcp-tls.patch
+			patch -p1 < tcp-tls.patch
 		fi
 
 		# HTTP3
