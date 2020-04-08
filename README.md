@@ -1,6 +1,6 @@
-# optimstack
+# OptimStack
 
- Optimized NGINX installation script with extra module support and configuration. https://optimengine.com
+ OptimStack is a Nginx installation script with extra module support for optimum security & performance. https://optimengine.com
 
 # Optional modules/features
 
@@ -14,7 +14,7 @@
 - ngx_cache_purge (Purge content from FastCGI, proxy, SCGI and uWSGI caches)
 - ngx-fancyindex (Fancy indexes module)
 
-# Installation: No Control Panel
+# Installation: Debian Standard Nginx
 
 Just run this command in your shell to download and run the script, and then just follow the instruction on your screen:
 
@@ -22,7 +22,7 @@ Just run this command in your shell to download and run the script, and then jus
 cd /tmp; rm -rf optimstack.sh; wget https://raw.githubusercontent.com/OptimBro/optimstack/master/optimstack.sh --no-dns-cache; chmod +x optimstack.sh; bash optimstack.sh
 ```
 
-# Installation: VirtualMin/ ISPconfig
+# Installation: VirtualMin Compatible Nginx for Debian, Ubuntu
 
 Just run this command in your shell to download and run the script, and then just follow the instruction on your screen:
 
@@ -36,5 +36,7 @@ You need to setup WP CLI first
 ```
 cd /web; rm wp.sh; wget https://raw.githubusercontent.com/OptimBro/optimstack/master/wp.sh; chmod +x wp.sh; bash wp.sh
 ```
-
-Credits: Inspired from https://github.com/angristan/nginx-autoinstall (Thanks for the script)
+### Links
+https://www.nginx.com/ 
+https://github.com/angristan/nginx-autoinstall (Thanks for the script idea)
+https://github.com/SpiderLabs/ModSecurity-nginx
