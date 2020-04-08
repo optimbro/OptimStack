@@ -1,7 +1,7 @@
 From 1e2b56572d66eba356346346767676abefdd8 Mon Sep 17 00:00:00 2001
 From: Buik /Bassie <bassie@buik.locale>
 Date: Fri, 31 May 2019 08:51:08 +0200
-Subject: [PATCH] Nginx 1.17.0 server header removal
+Subject: [PATCH] Nginx 1.17.9 server header removal
 
 Showing which web-server software you currently use, is almost asking for problems,
 in the case of a none automated, targeted attack.
@@ -21,8 +21,8 @@ index 3204351..9e4998f 100644
 +++ b/src/core/nginx.h
 @@ -11,7 +11,7 @@
  
- #define nginx_version      1017000
- #define NGINX_VERSION      "1.17.0"
+ #define nginx_version      1017090
+ #define NGINX_VERSION      "1.17.9"
 -#define NGINX_VER          "nginx/" NGINX_VERSION
 +#define NGINX_VER          "/" NGINX_VERSION
  
