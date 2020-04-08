@@ -555,6 +555,9 @@ case $OPTION in
 			
 			wget -c https://raw.githubusercontent.com/kn007/patch/master/Enable_BoringSSL_OCSP.patch
 			patch -p1 < Enable_BoringSSL_OCSP.patch
+			
+			wget -c https://raw.githubusercontent.com/OptimBro/OptimStack/master/Patches/remove-server-header.patch
+			patch -p1 < remove-server-header.patch
 
 			NGINX_OPTIONS=$(echo "$NGINX_OPTIONS"; echo --with-openssl=/usr/local/src/nginx/modules/quiche/deps/boringssl --with-quiche=/usr/local/src/nginx/modules/quiche)
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo --with-http_v3_module --with-http_v2_hpack_enc)
