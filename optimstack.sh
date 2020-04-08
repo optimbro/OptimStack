@@ -55,9 +55,6 @@ echo '
 	echo "optimstack v-${OPTIM_NGINX_VER}"
 	echo "It is the most complete nginx installation script which supports most widely used nginx modules."
 	echo "Choose your desired option from the menu"
-	echo "Credits: Forked from https://github.com/angristan/nginx-autoinstall, thanks to the developer."
-	echo "Credits: OptimBro (It's me), for extending and adding more features."
-	echo "Credits: All present and future supporters like you"
 	echo "Thank You"
 	echo ""
 	echo "What do you want to do?"
@@ -696,7 +693,7 @@ case $OPTION in
 		rm -rf optimstack.sh
 		echo "Starting update..."
 		sleep 1
-		wget https://raw.githubusercontent.com/OptimBro/optimstack/master/optimstack.sh --no-dns-cache -O optimstack.sh
+		wget https://raw.githubusercontent.com/OptimBro/OptimStack/master/optimstack.sh --no-dns-cache -O optimstack.sh
 		chmod +x optimstack.sh
 		echo ""
 		echo "Updating script..."
