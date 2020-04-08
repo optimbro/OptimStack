@@ -1,0 +1,58 @@
+From 1e2b56572d66eba356346346767676abefdd8 Mon Sep 17 00:00:00 2001
+From: Buik /Bassie <bassie@buik.locale>
+Date: Fri, 31 May 2019 08:51:08 +0200
+Subject: [PATCH] Nginx 1.17.0 server header removal
+
+Showing which web-server software you currently use, is almost asking for problems,
+in the case of a none automated, targeted attack.
+
+This patch will remove Nginx as server header.
+
+As written in internet standard rfc2616, your web-server comply with the internet standard if your web-server won"t display the specific Server: used software. Because it is not a hard requirement to show, it is a choice.
+---
+ src/core/nginx.h                         | 2 +-
+ src/http/ngx_http_header_filter_module.c | 2 +-
+ src/http/v2/ngx_http_v2_filter_module.c  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/core/nginx.h b/src/core/nginx.h
+index 3204351..9e4998f 100644
+--- a/src/core/nginx.h
++++ b/src/core/nginx.h
+@@ -11,7 +11,7 @@
+ 
+ #define nginx_version      1017000
+ #define NGINX_VERSION      "1.17.0"
+-#define NGINX_VER          "nginx/" NGINX_VERSION
++#define NGINX_VER          "/" NGINX_VERSION
+ 
+ #ifdef NGX_BUILD
+ #define NGINX_VER_BUILD    NGINX_VER " (" NGX_BUILD ")"
+diff --git a/src/http/ngx_http_header_filter_module.c b/src/http/ngx_http_header_filter_module.c
+index 9b89405..75afb60 100644
+--- a/src/http/ngx_http_header_filter_module.c
++++ b/src/http/ngx_http_header_filter_module.c
+@@ -46,7 +46,7 @@ ngx_module_t  ngx_http_header_filter_module = {
+ };
+ 
+ 
+-static u_char ngx_http_server_string[] = "Server: nginx" CRLF;
++static u_char ngx_http_server_string[] = "Server: " CRLF;
+ static u_char ngx_http_server_full_string[] = "Server: " NGINX_VER CRLF;
+ static u_char ngx_http_server_build_string[] = "Server: " NGINX_VER_BUILD CRLF;
+ 
+diff --git a/src/http/v2/ngx_http_v2_filter_module.c b/src/http/v2/ngx_http_v2_filter_module.c
+index 853faef..6270a93 100644
+--- a/src/http/v2/ngx_http_v2_filter_module.c
++++ b/src/http/v2/ngx_http_v2_filter_module.c
+@@ -148,7 +148,7 @@ ngx_http_v2_header_filter(ngx_http_request_t *r)
+     ngx_http_core_srv_conf_t  *cscf;
+     u_char                     addr[NGX_SOCKADDR_STRLEN];
+ 
+-    static const u_char nginx[5] = "\x84\xaa\x63\x55\xe7";
++    static const u_char nginx[1] = "\x80";
+ #if (NGX_HTTP_GZIP)
+     static const u_char accept_encoding[12] =
+         "\x8b\x84\x84\x2d\x69\x5b\x05\x44\x3c\x86\xaa\x6f";
+-- 
+2.18.1
