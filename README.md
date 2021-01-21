@@ -36,7 +36,9 @@ You need to setup WP CLI first
 ```
 cd /web; rm wp.sh; wget https://raw.githubusercontent.com/OptimBro/optimstack/master/wp.sh; chmod +x wp.sh; bash wp.sh
 ```
-### Links
+### Credits
+https://wp-cli.org/
+https://github.com/google/ngx_brotli
 https://www.nginx.com/ 
-https://github.com/angristan/nginx-autoinstall (Thanks for the script idea)
+https://github.com/angristan/nginx-autoinstall (Thanks for the script :) )
 https://github.com/SpiderLabs/ModSecurity-nginx
