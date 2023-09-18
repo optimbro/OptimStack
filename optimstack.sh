@@ -6,7 +6,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Define versions
-OPTIM_NGINX_VER=31.4
+OPTIM_NGINX_VER=31.5
 NGINX_MAINLINE_VER=1.25.2
 NGINX_STABLE_VER=1.16.1
 LIBRESSL_VER=3.0.2
@@ -373,8 +373,7 @@ case $OPTION in
 		echo "Configuring PCRE_NGINX Module"
 		sleep 3
 			cd /usr/local/src/nginx/modules || exit 1
-                        wget 
-https://webwerks.dl.sourceforge.net/project/pcre/pcre/${PCRE_NGINX_VER}/pcre-${PCRE_NGINX_VER}.tar.gz
+                        wget https://webwerks.dl.sourceforge.net/project/pcre/pcre/${PCRE_NGINX_VER}/pcre-${PCRE_NGINX_VER}.tar.gz
 		#	wget https://ftp.pcre.org/pub/pcre/pcre-${PCRE_NGINX_VER}.tar.gz
 			tar xaf pcre-${PCRE_NGINX_VER}.tar.gz
 			cd pcre-${PCRE_NGINX_VER}
