@@ -16,7 +16,7 @@ HEADERMOD_VER=0.33
 LIBMAXMINDDB_VER=1.4.2
 GEOIP2_VER=3.3
 HTTP_REDIS_VER=0.3.9
-PCRE_NGINX_VER=8.43
+PCRE_NGINX_VER=10.42
 ZLIB_NGINX_VER=1.2.11
 
 # Define installation paramaters for headless install (fallback if unspecifed)
@@ -373,7 +373,8 @@ case $OPTION in
 		echo "Configuring PCRE_NGINX Module"
 		sleep 3
 			cd /usr/local/src/nginx/modules || exit 1
-			wget https://ftp.pcre.org/pub/pcre/pcre-${PCRE_NGINX_VER}.tar.gz
+                        wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PCRE_NGINX_VER}/pcre2-${PCRE_NGINX_VER}.tar.gz
+		#	wget https://ftp.pcre.org/pub/pcre/pcre-${PCRE_NGINX_VER}.tar.gz
 			tar xaf pcre-${PCRE_NGINX_VER}.tar.gz
 			cd pcre-${PCRE_NGINX_VER}
 		fi
