@@ -6,7 +6,7 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # Define versions
-OPTIM_NGINX_VER=31.3
+OPTIM_NGINX_VER=31.4
 NGINX_MAINLINE_VER=1.25.2
 NGINX_STABLE_VER=1.16.1
 LIBRESSL_VER=3.0.2
@@ -16,7 +16,7 @@ HEADERMOD_VER=0.33
 LIBMAXMINDDB_VER=1.4.2
 GEOIP2_VER=3.3
 HTTP_REDIS_VER=0.3.9
-PCRE_NGINX_VER=10.42
+PCRE_NGINX_VER=8.45
 ZLIB_NGINX_VER=1.2.11
 
 # Define installation paramaters for headless install (fallback if unspecifed)
@@ -373,10 +373,11 @@ case $OPTION in
 		echo "Configuring PCRE_NGINX Module"
 		sleep 3
 			cd /usr/local/src/nginx/modules || exit 1
-                        wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PCRE_NGINX_VER}/pcre2-${PCRE_NGINX_VER}.tar.gz
-		#	wget https://ftp.pcre.org/pub/pcre/pcre2-${PCRE_NGINX_VER}.tar.gz
-			tar xaf pcre2-${PCRE_NGINX_VER}.tar.gz
-			cd pcre2-${PCRE_NGINX_VER}
+                        wget 
+https://webwerks.dl.sourceforge.net/project/pcre/pcre/${PCRE_NGINX_VER}/pcre-${PCRE_NGINX_VER}.tar.gz
+		#	wget https://ftp.pcre.org/pub/pcre/pcre-${PCRE_NGINX_VER}.tar.gz
+			tar xaf pcre-${PCRE_NGINX_VER}.tar.gz
+			cd pcre-${PCRE_NGINX_VER}
 		fi
 
 		if [[ "$ZLIB_NGINX" = 'y' ]]; then
@@ -437,7 +438,7 @@ case $OPTION in
 		--with-http_slice_module \
 		--with-http_stub_status_module \
 		--with-http_realip_module \
-		--with-pcre2-jit \
+		--with-pcre-jit \
 		--with-http_degradation_module \
 		--with-http_addition_module \
 		--with-http_dav_module \
@@ -529,7 +530,7 @@ case $OPTION in
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--add-module=/usr/local/src/nginx/modules/echo-nginx-module")
 		fi
 		if [[ "$PCRE_NGINX" = 'y' ]]; then
-			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--with-pcre=/usr/local/src/nginx/modules/pcre2-${PCRE_NGINX_VER}")
+			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--with-pcre=/usr/local/src/nginx/modules/pcre-${PCRE_NGINX_VER}")
 		fi
 		if [[ "$ZLIB_NGINX" = 'y' ]]; then
 			NGINX_MODULES=$(echo "$NGINX_MODULES"; echo "--with-zlib=/usr/local/src/nginx/modules/zlib-cf")
@@ -567,7 +568,7 @@ case $OPTION in
 		echo "Compiling NGINX"
 		sleep 3
 
-		./configure $NGINX_OPTIONS --with-cc-opt='-g -O2 -fPIC -fstack-protector-strong -Wformat -Wno-error -Wno-deprecated-declarations -Wno-ignored-qualifiers -Wdate-time -D_FORTIFY_SOURCE=2' --with-ld-opt='-Wl,-Bsymbolic-functions -fPIC -pie -Wl,-z,relro -Wl,-z,now' --with-pcre2-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' --with-zlib-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' $NGINX_MODULES
+		./configure $NGINX_OPTIONS --with-cc-opt='-g -O2 -fPIC -fstack-protector-strong -Wformat -Wno-error -Wno-deprecated-declarations -Wno-ignored-qualifiers -Wdate-time -D_FORTIFY_SOURCE=2' --with-ld-opt='-Wl,-Bsymbolic-functions -fPIC -pie -Wl,-z,relro -Wl,-z,now' --with-pcre-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' --with-zlib-opt='-g -Ofast -fPIC -m64 -march=native -fstack-protector-strong -D_FORTIFY_SOURCE=2' $NGINX_MODULES
 		make -j "$(nproc)"
 		make install
 
